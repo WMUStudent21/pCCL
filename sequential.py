@@ -1,12 +1,12 @@
-def label_components(image):
+import utils
+
+def twoPass(image):
     rows, cols = len(image), len(image[0])
     labels = [[0 for _ in range(cols)] for _ in range(rows)]
     current_label = 0
     equivalences = {}
 
-    # First pass
-
-    # parallelise the row-major
+    # First pass - assign labels
     for i in range(rows):
         for j in range(cols):
             if image[i][j] == 1:
@@ -34,14 +34,13 @@ def label_components(image):
     return labels
 
 
-import random
-# Example usage:
-binary_image = [[(random.choice([0, 1])) for _ in range(8)] for _ in range(8)]
-for row in binary_image:
-    print(row)
+if __name__ == "__main__":
+    binary_image = utils.generate_image(7, 7, 42)
+    for row in binary_image:
+        print(row)
 
-print("\n")
+    print("\n")
 
-result = label_components(binary_image)
-for row in result:
-    print(row)
+    result = twoPass(binary_image)
+    for row in result:
+        print(row)
