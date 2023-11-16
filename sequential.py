@@ -1,4 +1,6 @@
 import utils
+import numpy as np
+import matplotlib.pyplot as plt
 
 def twoPass(image):
     rows, cols = len(image), len(image[0])
@@ -35,7 +37,8 @@ def twoPass(image):
 
 
 if __name__ == "__main__":
-    binary_image = utils.generate_image(7, 7, 42)
+    binary_image = utils.binarise_image("flower.jpg")
+    # binary_image = utils.generate_image(10, 10, 42)
     for row in binary_image:
         print(row)
 
@@ -44,3 +47,6 @@ if __name__ == "__main__":
     result = twoPass(binary_image)
     for row in result:
         print(row)
+
+    plt.imshow(result, cmap='Blues')
+    plt.show()
