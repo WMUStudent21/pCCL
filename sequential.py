@@ -8,6 +8,8 @@ def twoPass(image):
     current_label = 0
     equivalences = {}
 
+    print(rows)
+
     # First pass - assign labels
     for i in range(rows):
         for j in range(cols):
@@ -39,14 +41,14 @@ def twoPass(image):
 if __name__ == "__main__":
     binary_image = utils.binarise_image("flower.jpg")
     # binary_image = utils.generate_image(10, 10, 42)
-    for row in binary_image:
-        print(row)
+    # for row in binary_image:
+    #     print(row)
 
-    print("\n")
+    # print("\n")
 
     result = twoPass(binary_image)
-    for row in result:
-        print(row)
+    # for row in result:
+        # print(row)
 
     plt.imshow(result, cmap='Blues')
     plt.show()

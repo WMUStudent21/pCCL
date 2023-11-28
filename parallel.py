@@ -5,7 +5,7 @@ Ref: https://cse.buffalo.edu/faculty/miller/Courses/CSE633/Kun-Lin-Spring-2020.p
 import utils
 import numpy as np
 import matplotlib.pyplot as plt
-import mpi4py
+from mpi4py import MPI
 
 def twoPassParallel(image):
     rows, cols = len(image), len(image[0])
@@ -13,10 +13,20 @@ def twoPassParallel(image):
     current_label = 0
     equivalences = {}
 
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
     # First pass - assign labels
 
-    # Parallelise Row-Major
-    for i in range(rows):
+    chunk_size = rows // size
+    start_row = rank * chunk_size
+    end_row = start_row + chunk_size if rank < size - 1 else rows
+
+    print(start_row, end_row)
+
+    # Parallelize Row-Major
+    for i in range(start_row, end_row):
         for j in range(cols):
             if image[i][j] == 1:
                 neighbors = [labels[i-1][j] if i > 0 else 0, labels[i][j-1] if j > 0 else 0]
@@ -30,6 +40,10 @@ def twoPassParallel(image):
                     for neighbor in non_zero_neighbors:
                         if neighbor != min_neighbor:
                             equivalences[neighbor] = min_neighbor
+
+    comm.Barrier()
+    # print(f"Rank {rank} results after first pass")
+
 
     # Second pass - resolve equivalences
     for i in range(rows):
@@ -46,14 +60,14 @@ def twoPassParallel(image):
 if __name__ == "__main__":
     binary_image = utils.binarise_image("flower.jpg")
     # binary_image = utils.generate_image(10, 10, 42)
-    for row in binary_image:
-        print(row)
+    # for row in binary_image:
+        # print(row)
 
-    print("\n")
+    # print("\n")
 
     result = twoPassParallel(binary_image)
-    for row in result:
-        print(row)
+    # for row in result:
+        # print(row)
 
     plt.imshow(result, cmap='Blues')
     plt.show()
