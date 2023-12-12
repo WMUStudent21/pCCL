@@ -1,4 +1,4 @@
-def generate_image(n=10, m=10, SEED=42):
+def generateImage(n=10, m=10, SEED=42):
     
     import random
 
@@ -6,7 +6,7 @@ def generate_image(n=10, m=10, SEED=42):
 
     return [[(random.choice([0, 1])) for _ in range(m)] for _ in range(n)]
 
-def binarise_image(image_path):
+def binariseImage(image_path):
 
     import numpy as np
     from PIL import Image
