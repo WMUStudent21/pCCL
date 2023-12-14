@@ -80,7 +80,8 @@ def twoPass(image):
 
 if __name__ == "__main__":
     # binary_image = binariseImage("flower.jpg")
-    m = n = 256
+    # m, n = 192, 144
+    m = n = 512
     binary_image = generateImage(m, n, 42)
     # for row in binary_image:
     #     print(row)

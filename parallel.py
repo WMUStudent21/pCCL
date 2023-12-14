@@ -192,7 +192,8 @@ if __name__ == "__main__":
 
     # binary_image = utils.binariseImage("flower.jpg")
     # m, n = len(binary_image), len(binary_image[0])
-    m = n = 256
+    m = n = 386
+    # m, n = 192, 144
     binary_image = utils.generateImage(m, n, 42)
 
     comm = MPI.COMM_WORLD
